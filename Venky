@@ -1,0 +1,65 @@
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  // Store the original long URL entered by the user
+  const [longUrl, setLongUrl] = useState('');
+  // Store the generated short URL
+  const [shortUrl, setShortUrl] = useState('');
+
+  // Function to generate a dummy short URL
+  const generateShortUrl = () => {
+    // Check if longUrl is empty, if no URL provided → display error message
+    if (!longUrl.trim()) {
+      setShortUrl("Please enter a URL");
+      return;
+    }
+
+    // Generate a random code
+    // Use Math.random().toString(36) to get a random alphanumeric string.
+    // Then fetch the first 6 characters after "0.".
+    const code = Math.random().toString(36).substring(2,8);
+
+    // Build short URL using below dummy domain and the short code
+    setShortUrl(https://short.ly/${code});
+  };
+
+  return (
+    <div className="container">
+      <h1>URL Shortener</h1>
+      {/* Input for the original long URL */}
+      <input
+        type="text"
+
+        // Bind the input's value to longUrl state
+        value={longUrl}
+
+        // TODO: Update longUrl state using setLongUrl when user types
+        onChange={(e) => setLongUrl(e.target.value)}
+        placeholder="Enter a URL to shorten"
+      />
+      <br />
+      {/* Button to generate short URL */}
+      <button
+
+        // Call Appropriate function on "Shorten URL" button click
+        onClick={generateShortUrl}
+      >
+        Shorten URL
+      </button>
+      {/* Display generated short URL */}
+      <p>
+        {shortUrl && (
+          <>
+            Short URL:{" "}
+            <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+              {shortUrl}
+            </a>
+          </>
+        )}
+      </p>
+    </div>
+  );
+}
+
+export default App;
